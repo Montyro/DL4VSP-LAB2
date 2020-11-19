@@ -94,7 +94,7 @@ Type
 > cd video
 
 And enerate the video with:
-> python img2video -i output
+> python img2video.py -i output
 
 ## References
 
