@@ -61,7 +61,7 @@ then navigate with the console to the video folder (cd video from the previous d
 change al print function in video2img from print 'something' to print('something') (2 in total)
 execute the following command, replacing videoname.videotype for yourpor video name and extension
 
-> python video2img.py -i video/videoname.videotype
+> python video2img.py -i videoname.videotype
 
 Now execute:
 > python get_pkllist.py
