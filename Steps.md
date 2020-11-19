@@ -77,7 +77,7 @@ Now execute:
 ### in yolo_detection.py change:
 * all print functions to use parenthesis (5 in total)
 * in line 138 change all the strings to start with a b, like "yolo.weights" now should be b"yolo.weights".
-* in line 113 change the image to image.enconde('utf-8')
+* in line 113 change the image to image.encode('utf-8')
 
 ## Install some final dependencies:
 > conda install -y matplotlib
@@ -106,4 +106,4 @@ Now execute
 change al print function in img2video from print 'something' to print('something') (2 in total)
 
 Generate the video:
-> python img2video -i output
+> python img2video.py -i output
