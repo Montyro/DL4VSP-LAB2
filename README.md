@@ -1,107 +1,26 @@
-## Create the environment 
+# Seq_nms_YOLO
 
-Using a linux terminal, navigate to the proyect folder and type:
+#### Membres: Yunyun SUN, Yutong YAN, Sixiang XU, Heng ZHANG
 
-> conda create -y --prefix ./env python=3.7
+---
 
-Then type:
->source activate ./env
+## Introduction
 
-## Install dependencies
+![](img/index.jpg) 
 
-Execute the following commands in order:
+This project combines **YOLOv2**([reference](https://arxiv.org/abs/1506.02640)) and **seq-nms**([reference](https://arxiv.org/abs/1602.08465)) to realise **real time video detection**.
 
-> conda install -y -c conda-forge opencv
+## Steps
 
-> conda install -y -c anaconda cudatoolkit=10.1
+1. `make` the project;
+1. Download `yolo.weights` and `tiny-yolo.weights` by running `wget https://pjreddie.com/media/files/yolo.weights` and `wget https://pjreddie.com/media/files/tiny-yolo-voc.weights`;
+1. Copy a video file to the video folder, for example, `input.mp4`;
+1. In the video folder, run `python video2img.py -i input.mp4` and then `python get_pkllist.py`;
+1. Return to root floder and run `python yolo_seqnms.py` to generate output images in `video/output`;
+1. If you want to reconstruct a video from these output images, you can go to the video folder and run `python img2video.py -i output`
 
-> conda install -y cudnn=7.6.4
+And you will see detection results in `video/output`
 
-> conda install -y numpy
+## Reference
 
-> conda install -y -c menpo imageio 
-
-## Now you can compile the program, for this you have to first set the PKG_CONFIG_PATH variable to include the lib/pkgconfig folder from your environment:
-
-> PKG_CONFIG_PATH=$PKG_CONFIG_PATH:./env/lib/pkgconfig
-
-> export PKG_CONFIG_PATH
-
-## In makefile edit:
-To the ARCH = -gencode .... add at the end of the last line:
-> \ 
-and in the next line:
-> -gencode arch=compute_75,code=[sm_75,compute_75]
-
-In the line 50 (or 49 if you did not add previous line) change cuda-8.0 to cuda-10.1
-and two lines below, also change cuda-8.0 to cuda-10.1
-
-And compile
-> make
-
-## Download yolo weights
-Execute the following commands to download the weights. First one will take a while.
-
-> wget https://pjreddie.com/media/files/yolo.weights
-
-> wget https://github.com/leetenki/YOLOtiny_v2_chainer/blob/master/tiny-yolo-voc.weights
-
-Rename this last file from tiny-yolo-voc.weights to tini-yolo.weights
-> mv tiny-yolo-voc.weights tiny-yolo.weights
-
-
-## Prepare the video
-
-Copy input video to video folder
-then navigate with the console to the video folder (cd video from the previous directory)
-> cd video
-
-change al print function in video2img from print 'something' to print('something') (2 in total)
-execute the following command, replacing videoname.videotype for yourpor video name and extension
-
-> python video2img.py -i video/videoname.videotype
-
-Now execute:
-> python get_pkllist.py
-
-## Change the main files:
-
-### in yolo_seqnms.py change:
-* all print functions to use parenthesis (as in prepare the video section) (8 in total)
-* change import cpickle as pickle to import pickle
-* add import imageio
-* in line 288 (maybe 289 or 300 with the previous changes) change scipy.misc.imsave to imageio.imwrite
-* in line 39 (40 with the previous changes), change  box[0] == cls to str(box[0],'utf-8') == cls
-### in yolo_detection.py change:
-* all print functions to use parenthesis (5 in total)
-* in line 138 change all the strings to start with a b, like "yolo.weights" now should be b"yolo.weights".
-* in line 113 change the image to image.enconde('utf-8')
-
-## Install some final dependencies:
-> conda install -y matplotlib
-
-> conda install -y -c anaconda scipy
-
-> conda install -y -c conda-forge tensorflow
-
-> pip install tensorflow-object-detection-api
-
-## copy libdarknet.so and libdarknet.a to env/lib
-First go back to the main directory 
-> cd..
-Now execute
-> cp libdarknet.so env/lib/
-
-> cp libdarknet.a env/lib/
-
-## Run the code
-
-> python yolo_seqnms.py
-
-## Export the video
-> cd video
-
-change al print function in img2video from print 'something' to print('something') (2 in total)
-
-Generate the video:
-> python img2video -i output
+This project copies lots of code from [darknet](https://github.com/pjreddie/darknet) , [Seq-NMS](https://github.com/lrghust/Seq-NMS) and  [models](https://github.com/tensorflow/models).
