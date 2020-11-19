@@ -90,8 +90,11 @@ Now execute:
 
 ## copy libdarknet.so and libdarknet.a to env/lib
 First go back to the main directory 
+
 > cd..
+
 Now execute
+
 > cp libdarknet.so env/lib/
 
 > cp libdarknet.a env/lib/
